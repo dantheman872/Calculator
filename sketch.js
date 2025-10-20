@@ -1,63 +1,155 @@
-const ROWS = 8
-const COLS = 8
+const ROWS = 14
+const COLS = 14
 
 function setup(){
 
     createCanvas(600,600)
+    textAlign(CENTER)
 }
 
-let inputA = [0,0,0,0,0,0,0,0]
-
+let inputA = new Array(COLS).fill(false)
+let inputB = new Array(COLS).fill(false)
+let outputA = new Array(COLS).fill(false)
+let carryA = new Array(COLS).fill(false)
 
 function draw(){
 
     background(255)
     rectWidth = width / COLS
+    addBit(0)
+    addBit(90)
+    addBit(180)
+
+    updateBit(inputA, 0)
+    updateBit(inputB, 90)
+    
+    mousePressed()
+    mouseReleased()
+    bitAddition()
+    fill(25)
+    // Text under InputA
+    for(let i = 0; i < COLS; i++){
+        let x = i
+        text(2 ** i,(rectWidth / 2) + i * rectWidth, 85)
+    }
+
+    // Text under InputB
+    for(let i = 0; i < COLS; i++){
+
+        text(2 ** i,(rectWidth / 2) + i * rectWidth, 175)
+    }
+
+    //Text under OutputA
+    for(let i = 0; i < COLS; i++){
+
+        text(2 ** i,(rectWidth / 2) + i * rectWidth, 265)
+    }
+}
+
+function addBit(y){
+
+    for(let i = 0; i < COLS; i++){
+        if (inputA[i] == true && y == 0){
+
+            fill(225,255,23)
+        }
+
+        if (inputA[i] == false && y == 0){
+
+            fill(175)
+        }
+
+        if (inputB[i] == true && y == 90){
+
+            fill(225,255,23)
+        }
+
+        if (inputB[i] == false && y == 90){
+
+            fill(175)
+        }
+
+        if (outputA[i] == true && y == 180){
+
+            fill(225,255,23)
+        }
+
+        if (outputA[i] == false && y == 180){
+
+            fill(175)
+        }
+        rect(i * rectWidth, y, rectWidth, rectWidth)
+    }
+}
+
+function updateBit(input, y){
 
     for(let i = 0; i < COLS; i++){
 
-        let x = i * rectWidth
-        if (isMouseOverRect(x,0, rectWidth, rectWidth) && mouseIsPressed){
+        if (isMouseOverRect(i * rectWidth, y, rectWidth, rectWidth) && mouseClick == true){
 
-            fill(0,0,255)
-            inputA[i] = 1
-        } else {
-            noFill()
-            inputA[i] = 0
+            if(input[i] < 1){
+                
+                input[i] = true
+            } else {
+                
+                input[i] = false
+            }
         }
 
-        rect(x,0,rectWidth)
-        console.log(inputA)
     }
-
-    for(let i = 0; i < COLS; i++){
-
-        let x = i * rectWidth
-        if (inputA[i] = 1){
-
-            fill(255)
-        } else{
-
-            noFill()
-        }
-        rect(x, 75, rectWidth)
-    }
-
-    // if (isMouseOverRect(0,0,75,75) && mouseIsPressed){
-
-    //     if(inputA[0] === 1){
-
-    //         inputA[0] = 0
-    //         fill(255)
-    //     } else {
-
-    //         inputA[0] = 1
-    //         fill(0)
-    //     }
-    // }
 }
 
 function isMouseOverRect(x, y, w, h){
 
     return mouseX > x && mouseX < x + w && mouseY > y && mouseY < y + h
+}
+
+function mousePressed(){
+
+    mouseClick = true
+}
+
+function mouseReleased(){
+
+    mouseClick = false
+}
+
+function bitAddition(){
+
+    for(let i = 0; i < COLS; i++){
+        
+        if (carryA[i] == false){
+
+            if(inputA[i] == true && inputB[i] == true){
+
+                outputA[i] = false
+                carryA[i + 1] = true 
+            } else 
+                if(inputA[i] == true || inputB[i] == true){
+
+                    outputA[i] = true
+                    carryA[i + 1] = false
+            } else {
+
+                outputA[i] = false
+                carryA[i + 1] = false
+            }
+        } else {
+
+            if(inputA[i] == true && inputB[i] == true){
+
+                outputA[i] = true
+                carryA[i + 1] = true
+            } else
+                if(inputA[i] == true || inputB[i] == true){
+
+                    outputA[i] = false
+                    carryA[i + 1] = true
+                } else {
+
+                    outputA[i] = true
+                }
+        }
+    }    
 }
