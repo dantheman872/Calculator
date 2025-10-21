@@ -28,7 +28,6 @@ function draw(){
     
     mousePressed()
     mouseReleased()
-    bitAddition()
     fill(25)
 
     textSize(10)
@@ -56,7 +55,67 @@ function draw(){
 
         text(2 ** i,(rectWidth / 2) + i * rectWidth, 530)
     }
+
+    //What setting
+    if(setting[0] == true){
+
+        bitAddition();
+    } else
+
+    if(setting[1] == true){
+
+        bitSubtraction();
+    } else
+
+    if(setting[2] == true){
+
+        bitAND();
+    } else
+
+    if(setting[3] == true){
+
+        bitNAND();
+    } else
+
+    if(setting[4] == true){
+
+        bitOR();
+    } else
+
+    if(setting[5] == true){
+
+        bitNOR();
+    } else
+
+    if(setting[6] == true){
+
+        bitXOR();
+    } else
+
+    if(setting[7] == true){
+
+        bitXNOR();
+    } else
+
+    if(setting[8] == true){
+
+        bitImplies();
+    } else 
+
+    if(setting[9] == true){
+
+        bitNImplies();
+    } else
+
+    if(setting[10] == true){
+
+        bitRightShift();
+    } else {
+
+        outputA.fill(false)
+    }
 }
+
 
 function addBit(l, y){
 
@@ -114,6 +173,7 @@ function updateBit(input, y, l){
             if(input[i] < 1){
                 
                 input[i] = true
+                outputA[i] = false
             } else {
                 
                 input[i] = false
@@ -175,6 +235,95 @@ function bitAddition(){
                 }
         }
     }    
+}
+
+function bitSubtraction(){
+
+
+}
+
+function bitAND(){
+
+    for(let i = 0; i < COLS; i++){
+
+        if(inputA[i] && inputB[i]){
+
+            outputA[i] = true
+        }
+    }
+}
+
+function bitNAND(){
+
+    for(let i = 0; i < COLS; i++){
+
+        if(!(inputA[i] && inputB[i])){
+
+            outputA[i] = true
+        }
+    }
+}
+
+function bitOR(){
+
+    for(let i = 0; i < COLS; i++){
+
+        if(inputA[i] || inputB[i]){
+
+            outputA[i] = true
+        }
+    }
+}
+
+function bitNOR(){
+
+    for(let i = 0; i < COLS; i++){
+
+        if(!(inputA[i] || inputB[i])){
+
+            outputA[i] = true
+        }
+    }
+}
+
+function bitXOR(){
+
+    for(let i = 0; i < COLS; i++){
+
+        if(!(inputA[i] && inputB[i])){
+
+            if(inputA[i] || inputB[i]){
+
+                outputA[i] = true
+            }
+        }
+    }
+}
+
+function bitXNOR(){
+
+    for(let i = 0; i < COLS; i++){
+
+        if((inputA[i] && inputB[i]) || (!inputA[i] && !inputB[i])){        
+
+            outputA[i] = true            
+        }
+    }
+}
+
+function bitImplies(){
+
+
+}
+
+function bitNImplies(){
+
+
+}
+
+function bitRightShift(){
+
+
 }
 
 function keyPressed(){
