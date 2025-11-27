@@ -190,6 +190,7 @@ function isMouseOverRect(x, y, w, h){
 
 function mousePressed(){
 
+  //  bitAddition()
     mouseClick = true
 }
 
@@ -239,7 +240,13 @@ function bitAddition(){
 
 function bitSubtraction(){
 
+    for(let i = inputA.length; i > 0; i--){
 
+        if(intputA[i] && intputB[i]){
+
+            outputA[i] = false
+        }
+    }
 }
 
 function bitAND(){
@@ -334,4 +341,14 @@ function keyPressed(){
     inputB[i] = false
     setting[i] = false
     }    
+}
+
+function updateAnswer(){
+
+    for(let i = 0; i < outputA.length; i++){
+
+        if(inputA(i)){
+
+        }
+    }
 }
